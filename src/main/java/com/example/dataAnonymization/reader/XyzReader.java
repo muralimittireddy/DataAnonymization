@@ -3,15 +3,19 @@ package com.example.dataAnonymization.reader;
 import com.example.dataAnonymization.dto.Report_Dto;
 import com.example.dataAnonymization.enums.SqlEnum;
 import com.example.dataAnonymization.mapper.Report_Mapper;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
+@StepScope
 public class XyzReader extends JdbcPagingItemReader<Report_Dto>{
 
     SqlEnum query = SqlEnum.PENDING_REPORTS;

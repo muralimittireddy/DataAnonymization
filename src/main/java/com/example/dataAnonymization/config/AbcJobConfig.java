@@ -25,13 +25,6 @@ public class AbcJobConfig {
     @Autowired
     private JobRepository jobRepository;
 
-    @Autowired
-    private AbcReader abcReader;
-
-
-
-    @Autowired
-    private AbcWriter abcWriter;
 
     @Bean
     @StepScope
@@ -40,15 +33,15 @@ public class AbcJobConfig {
     }
 
     @Bean(name="abcJob")
-    public Job abcDataAnonymizationJob()
+    public Job abcDataAnonymizationJob(Step abcDataAnonymizationStep)
     {
         return new JobBuilder("abcJob",jobRepository)
-                .start(abcDataAnonymizationStep())
+                .start(abcDataAnonymizationStep)
                 .build();
     }
 
     @Bean
-    public Step abcDataAnonymizationStep()
+    public Step abcDataAnonymizationStep(AbcReader abcReader, AbcWriter abcWriter)
     {
         return new StepBuilder("abcDataAnonymizationStep",jobRepository)
                 .<Report_Dto,Report_Dto>chunk(100,transactionManager)

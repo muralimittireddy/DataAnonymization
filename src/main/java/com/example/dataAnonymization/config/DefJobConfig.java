@@ -12,10 +12,12 @@ import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
+@Configuration
 public class DefJobConfig {
 
     @Autowired
@@ -24,12 +26,6 @@ public class DefJobConfig {
     @Autowired
     private JobRepository jobRepository;
 
-    @Autowired
-    private DefReader defReader;
-
-
-    @Autowired
-    private DefWriter defWriter;
 
     @Bean
     @StepScope
@@ -38,15 +34,15 @@ public class DefJobConfig {
     }
 
     @Bean(name="defJob")
-    public Job abcDataAnonymizationJob()
+    public Job defDataAnonymizationJob(Step defDataAnonymizationStep)
     {
         return new JobBuilder("defJob",jobRepository)
-                .start(defDataAnonymizationStep())
+                .start(defDataAnonymizationStep)
                 .build();
     }
 
     @Bean
-    public Step defDataAnonymizationStep()
+    public Step defDataAnonymizationStep(DefReader defReader, DefWriter defWriter)
     {
         return new StepBuilder("defDataAnonymizationStep",jobRepository)
                 .<Report_Dto,Report_Dto>chunk(100,transactionManager)
