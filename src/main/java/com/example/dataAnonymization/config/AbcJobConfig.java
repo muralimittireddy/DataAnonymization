@@ -5,6 +5,7 @@ import com.example.dataAnonymization.reader.AbcReader;
 import com.example.dataAnonymization.writer.AbcWriter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class AbcJobConfig {
@@ -29,6 +32,12 @@ public class AbcJobConfig {
 
     @Autowired
     private AbcWriter abcWriter;
+
+    @Bean
+    @StepScope
+    public AbcReader abcReader(DataSource dataSource) throws Exception {
+        return new AbcReader(dataSource);
+    }
 
     @Bean(name="abcJob")
     public Job abcDataAnonymizationJob()

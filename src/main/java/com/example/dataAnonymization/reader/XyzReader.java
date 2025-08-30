@@ -15,9 +15,11 @@ import java.util.Map;
 public class XyzReader extends JdbcPagingItemReader<Report_Dto>{
 
     SqlEnum query = SqlEnum.PENDING_REPORTS;
-    public XyzReader(DataSource dataSource,
-                     @Value("#{stepExecutionContext['minValue']}") Long minValue,
-                     @Value("#{stepExecutionContext['maxValue']}") Long maxValue) {
+    public XyzReader(DataSource dataSource
+//            ,
+//                     @Value("#{stepExecutionContext['minValue']}") Long minValue,
+//                     @Value("#{stepExecutionContext['maxValue']}") Long maxValue
+    ) {
 
         setDataSource(dataSource);
         setPageSize(100); // batch size per fetch
@@ -37,9 +39,9 @@ public class XyzReader extends JdbcPagingItemReader<Report_Dto>{
             throw new IllegalStateException("Failed to initialize query provider", e);
         }
 
-        Map<String, Object> params = new HashMap<>();
-        params.put("min", minValue);
-        params.put("max", maxValue);
-        setParameterValues(params);
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("min", minValue);
+//        params.put("max", maxValue);
+//        setParameterValues(params);
     }
 }
