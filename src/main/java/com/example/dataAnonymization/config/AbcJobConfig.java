@@ -26,11 +26,11 @@ public class AbcJobConfig {
     private JobRepository jobRepository;
 
 
-    @Bean
-    @StepScope
-    public AbcReader abcReader(DataSource dataSource) throws Exception {
-        return new AbcReader(dataSource);
-    }
+    // @Bean
+    // @StepScope
+    // public AbcReader abcReader(DataSource dataSource) throws Exception {
+    //     return new AbcReader(dataSource);
+    // }
 
     @Bean(name="abcJob")
     public Job abcDataAnonymizationJob(Step abcDataAnonymizationStep)

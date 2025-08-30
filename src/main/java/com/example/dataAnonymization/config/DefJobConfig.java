@@ -27,11 +27,11 @@ public class DefJobConfig {
     private JobRepository jobRepository;
 
 
-    @Bean
-    @StepScope
-    public DefReader defReader(DataSource dataSource) throws Exception {
-        return new DefReader(dataSource);
-    }
+    // @Bean
+    // @StepScope
+    // public DefReader defReader(DataSource dataSource) throws Exception {
+    //     return new DefReader(dataSource);
+    // }
 
     @Bean(name="defJob")
     public Job defDataAnonymizationJob(Step defDataAnonymizationStep)

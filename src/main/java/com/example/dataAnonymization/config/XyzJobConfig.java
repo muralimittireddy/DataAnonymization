@@ -35,11 +35,11 @@ public class XyzJobConfig {
     @Autowired
     private XyzWriter xyzWriter;
 
-    @Bean
-    @StepScope
-    public XyzReader xyzReader(DataSource dataSource) throws Exception {
-        return new XyzReader(dataSource);
-    }
+    // @Bean
+    // @StepScope
+    // public XyzReader xyzReader(DataSource dataSource) throws Exception {
+    //     return new XyzReader(dataSource);
+    // }
 
     @Bean(name="xyzJob")
     public Job xyzDataAnonymizationJob(Step xyzDataAnonymizationStep)
