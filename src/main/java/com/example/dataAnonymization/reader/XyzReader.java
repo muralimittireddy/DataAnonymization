@@ -1,0 +1,45 @@
+package com.example.dataAnonymization.reader;
+
+import com.example.dataAnonymization.dto.Report_Dto;
+import com.example.dataAnonymization.enums.SqlEnum;
+import com.example.dataAnonymization.mapper.Report_Mapper;
+import org.springframework.batch.item.database.JdbcPagingItemReader;
+import org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+
+public class XyzReader extends JdbcPagingItemReader<Report_Dto>{
+
+    SqlEnum query = SqlEnum.PENDING_REPORTS;
+    public XyzReader(DataSource dataSource,
+                     @Value("#{stepExecutionContext['minValue']}") Long minValue,
+                     @Value("#{stepExecutionContext['maxValue']}") Long maxValue) {
+
+        setDataSource(dataSource);
+        setPageSize(100); // batch size per fetch
+        setRowMapper(new Report_Mapper());
+
+        // Query provider for paging (thread-safe)
+        SqlPagingQueryProviderFactoryBean queryProvider = new SqlPagingQueryProviderFactoryBean();
+        queryProvider.setDataSource(dataSource);
+        queryProvider.setSelectClause(query.getSelectClause());
+        queryProvider.setFromClause("FROM " + query.getFromClause());
+        queryProvider.setWhereClause("WHERE " + query.getWhereClause());
+        queryProvider.setSortKey("external_number");
+
+        try {
+            setQueryProvider(queryProvider.getObject());
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to initialize query provider", e);
+        }
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("min", minValue);
+        params.put("max", maxValue);
+        setParameterValues(params);
+    }
+}
