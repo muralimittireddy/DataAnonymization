@@ -24,6 +24,7 @@ public class JobExecutionService {
 
 
     public void runAllJobsInParallel() {
+        long startTime = System.currentTimeMillis(); // record start time
         // Use CompletableFuture to run each job on a separate thread from the executor service
         CompletableFuture<JobExecution> future1 = CompletableFuture.supplyAsync(() -> {
             try {
@@ -60,5 +61,7 @@ public class JobExecutionService {
 
         // Wait for all jobs to complete (optional, for monitoring purposes)
         CompletableFuture.allOf(future1, future2, future3).join();
+        long endTime = System.currentTimeMillis(); // record end time
+        System.out.println("All jobs completed in " + (endTime - startTime) + " ms");
     }
 }
