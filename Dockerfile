@@ -1,12 +1,16 @@
-# Stage 1: Build JAR
-FROM maven:3.9.6-eclipse-temurin-17 AS builder
-WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN mvn clean package -DskipTests
+# Python 3.11 slim base
+FROM python:3.11-slim
 
-# Stage 2: Create runtime image
-FROM openjdk:17-jdk-slim
+# Set working directory
 WORKDIR /app
-COPY --from=builder /app/target/DataAnonymization-0.0.1-SNAPSHOT.jar batch-app.jar
-ENTRYPOINT ["java", "-jar", "batch-app.jar"]
+
+# Copy script
+COPY data_ingestion.py .
+
+# Install dependencies
+RUN pip install psycopg2-binary faker
+
+# Run script
+CMD ["python", "data_ingestion.py"]
+
+
