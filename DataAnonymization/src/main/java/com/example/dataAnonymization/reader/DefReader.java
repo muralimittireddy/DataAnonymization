@@ -1,7 +1,9 @@
 package com.example.dataAnonymization.reader;
 
+import com.example.dataAnonymization.dto.DefDto;
 import com.example.dataAnonymization.dto.Report_Dto;
 import com.example.dataAnonymization.enums.SqlEnum;
+import com.example.dataAnonymization.mapper.DefMapper;
 import com.example.dataAnonymization.mapper.Report_Mapper;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
@@ -12,7 +14,7 @@ import javax.sql.DataSource;
 
 @Component
 @StepScope
-public class DefReader extends JdbcPagingItemReader<Report_Dto>{
+public class DefReader extends JdbcPagingItemReader<DefDto>{
 
     SqlEnum query = SqlEnum.DEF_Reader;
 
@@ -20,7 +22,7 @@ public class DefReader extends JdbcPagingItemReader<Report_Dto>{
 
         setDataSource(dataSource);
         setPageSize(100); // batch size per fetch
-        setRowMapper(new Report_Mapper());
+        setRowMapper(new DefMapper());
 
         // Query provider for paging (thread-safe)
         SqlPagingQueryProviderFactoryBean queryProvider = new SqlPagingQueryProviderFactoryBean();

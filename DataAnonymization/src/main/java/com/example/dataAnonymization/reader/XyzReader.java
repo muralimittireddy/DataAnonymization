@@ -1,8 +1,10 @@
 package com.example.dataAnonymization.reader;
 
 import com.example.dataAnonymization.dto.Report_Dto;
+import com.example.dataAnonymization.dto.XyzDto;
 import com.example.dataAnonymization.enums.SqlEnum;
 import com.example.dataAnonymization.mapper.Report_Mapper;
+import com.example.dataAnonymization.mapper.XyzMapper;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean;
@@ -16,7 +18,7 @@ import java.util.Map;
 
 @Component
 @StepScope
-public class XyzReader extends JdbcPagingItemReader<Report_Dto>{
+public class XyzReader extends JdbcPagingItemReader<XyzDto>{
 
     SqlEnum query = SqlEnum.XYZ_READER;
     public XyzReader(DataSource dataSource
@@ -27,7 +29,7 @@ public class XyzReader extends JdbcPagingItemReader<Report_Dto>{
 
         setDataSource(dataSource);
         setPageSize(100); // batch size per fetch
-        setRowMapper(new Report_Mapper());
+        setRowMapper(new XyzMapper());
 
         // Query provider for paging (thread-safe)
         SqlPagingQueryProviderFactoryBean queryProvider = new SqlPagingQueryProviderFactoryBean();
