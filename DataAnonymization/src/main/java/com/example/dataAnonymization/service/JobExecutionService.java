@@ -19,8 +19,7 @@ import java.util.concurrent.ExecutorService;
 public class JobExecutionService {
     @Autowired
     private  JobLauncher jobLauncher;
-    @Autowired
-    private  ExecutorService executorService;
+
     @Autowired
     private  Job abcJob;
     @Autowired
