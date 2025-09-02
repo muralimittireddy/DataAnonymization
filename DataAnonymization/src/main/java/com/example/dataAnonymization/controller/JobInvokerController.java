@@ -28,7 +28,7 @@ public class JobInvokerController {
     @PostMapping("/runJobs")
     public String runAnonymizationJobs() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobInstanceAlreadyCompleteException, ExecutionException, InterruptedException
         {
-                jobExecutionService.runAllJobsInParallel();
+                jobExecutionService.runAllJobsInSequentially();
         return "Anonymization jobs launched successfully!";
     }
 }

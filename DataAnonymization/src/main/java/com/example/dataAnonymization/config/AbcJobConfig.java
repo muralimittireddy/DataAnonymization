@@ -26,11 +26,8 @@ public class AbcJobConfig {
     private JobRepository jobRepository;
 
 
-    // @Bean
-    // @StepScope
-    // public AbcReader abcReader(DataSource dataSource) throws Exception {
-    //     return new AbcReader(dataSource);
-    // }
+    @Autowired
+    private TaskExecutor taskExecutor;
 
     @Bean(name="abcJob")
     public Job abcDataAnonymizationJob(Step abcDataAnonymizationStep)
@@ -47,6 +44,8 @@ public class AbcJobConfig {
                 .<Report_Dto,Report_Dto>chunk(100,transactionManager)
                 .reader(abcReader)
                 .writer(abcWriter)
+                .taskExecutor(taskExecutor)   // 🔑 add TaskExecutor here
+                .throttleLimit(5)             // max concurrent threads
                 .build();
     }
 

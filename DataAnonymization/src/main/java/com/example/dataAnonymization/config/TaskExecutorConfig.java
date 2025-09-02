@@ -27,4 +27,19 @@ public class TaskExecutorConfig {
         executor.initialize();
         return executor.getThreadPoolExecutor();
     }
+
+    /**
+     * TaskExecutor for multi-threading inside Spring Batch steps.
+     * Can be injected into steps using .taskExecutor(taskExecutor()).
+     */
+    @Bean
+    public TaskExecutor taskExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(5);  // threads used inside a step
+        executor.setMaxPoolSize(10);
+        executor.setQueueCapacity(25);
+        executor.setThreadNamePrefix("step-thread-");
+        executor.initialize();
+        return executor;
+    }
 }

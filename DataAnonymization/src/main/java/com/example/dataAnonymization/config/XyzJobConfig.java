@@ -35,11 +35,8 @@ public class XyzJobConfig {
     @Autowired
     private XyzWriter xyzWriter;
 
-    // @Bean
-    // @StepScope
-    // public XyzReader xyzReader(DataSource dataSource) throws Exception {
-    //     return new XyzReader(dataSource);
-    // }
+    @Autowired
+    private TaskExecutor taskExecutor;
 
     @Bean(name="xyzJob")
     public Job xyzDataAnonymizationJob(Step xyzDataAnonymizationStep)
@@ -56,6 +53,8 @@ public class XyzJobConfig {
                 .<Report_Dto,Report_Dto>chunk(100,transactionManager)
                 .reader(xyzReader)
                 .writer(xyzWriter)
+                .taskExecutor(taskExecutor)   // 🔑 add TaskExecutor here
+                .throttleLimit(5)             // max concurrent threads
                 .build();
     }
 

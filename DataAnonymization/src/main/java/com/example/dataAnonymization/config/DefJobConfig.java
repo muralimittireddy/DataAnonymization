@@ -27,11 +27,8 @@ public class DefJobConfig {
     private JobRepository jobRepository;
 
 
-    // @Bean
-    // @StepScope
-    // public DefReader defReader(DataSource dataSource) throws Exception {
-    //     return new DefReader(dataSource);
-    // }
+    @Autowired
+    private TaskExecutor taskExecutor;
 
     @Bean(name="defJob")
     public Job defDataAnonymizationJob(Step defDataAnonymizationStep)
@@ -48,6 +45,8 @@ public class DefJobConfig {
                 .<Report_Dto,Report_Dto>chunk(100,transactionManager)
                 .reader(defReader)
                 .writer(defWriter)
+                .taskExecutor(taskExecutor)   // 🔑 add TaskExecutor here
+                .throttleLimit(5)             // max concurrent threads
                 .build();
     }
 }

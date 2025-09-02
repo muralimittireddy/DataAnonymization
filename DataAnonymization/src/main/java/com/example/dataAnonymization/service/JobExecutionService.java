@@ -25,44 +25,23 @@ public class JobExecutionService {
     private  Job xyzJob;
 
 
-    public void runAllJobsInParallel() {
+    public void runAllJobsInSequentially() {
         long startTime = System.currentTimeMillis(); // record start time
-        // Use CompletableFuture to run each job on a separate thread from the executor service
-        CompletableFuture<JobExecution> future1 = CompletableFuture.supplyAsync(() -> {
-            try {
-                // Add a unique timestamp to job parameters to ensure each run is a new instance
-                return jobLauncher.run(xyzJob, new JobParametersBuilder()
+
+        jobLauncher.run(xyzJob, new JobParametersBuilder()
                         .addLong("run.id", System.currentTimeMillis())
                         .toJobParameters());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }, executorService);
 
-        CompletableFuture<JobExecution> future2 = CompletableFuture.supplyAsync(() -> {
-            try {
-                return jobLauncher.run(abcJob, new JobParametersBuilder()
+
+        jobLauncher.run(abcJob, new JobParametersBuilder()
                         .addLong("run.id", System.currentTimeMillis() + 1)
                         .toJobParameters());
-            } catch (Exception e) {
-//                log.error("Job 2 failed to launch.", e);
-                throw new RuntimeException(e);
-            }
-        }, executorService);
 
-        CompletableFuture<JobExecution> future3 = CompletableFuture.supplyAsync(() -> {
-            try {
-                return jobLauncher.run(defJob, new JobParametersBuilder()
+        jobLauncher.run(defJob, new JobParametersBuilder()
                         .addLong("run.id", System.currentTimeMillis() + 2)
                         .toJobParameters());
-            } catch (Exception e) {
-//                log.error("Job 3 failed to launch.", e);
-                throw new RuntimeException(e);
-            }
-        }, executorService);
 
-        // Wait for all jobs to complete (optional, for monitoring purposes)
-        CompletableFuture.allOf(future1, future2, future3).join();
+        // Wait for all jobs to complete
         long endTime = System.currentTimeMillis(); // record end time
         System.out.println("All jobs completed in " + (endTime - startTime) + " ms");
     }
