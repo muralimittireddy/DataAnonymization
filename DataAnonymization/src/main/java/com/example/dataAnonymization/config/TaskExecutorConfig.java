@@ -3,8 +3,9 @@ package com.example.dataAnonymization.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
+import org.springframework.core.task.TaskExecutor;
+//import java.util.concurrent.ExecutorService;
+//import java.util.concurrent.ThreadPoolExecutor;
 
 @Configuration
 public class TaskExecutorConfig {
@@ -16,17 +17,17 @@ public class TaskExecutorConfig {
      *
      * @return The configured ExecutorService bean.
      */
-    @Bean
-    public ExecutorService executorService() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(3); // Number of parallel jobs
-        executor.setMaxPoolSize(5); // Maximum number of threads
-        executor.setQueueCapacity(10); // Queue for tasks awaiting execution
-        executor.setThreadNamePrefix("job-executor-thread-");
-        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-        executor.initialize();
-        return executor.getThreadPoolExecutor();
-    }
+//    @Bean
+//    public ExecutorService executorService() {
+//        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+//        executor.setCorePoolSize(3); // Number of parallel jobs
+//        executor.setMaxPoolSize(5); // Maximum number of threads
+//        executor.setQueueCapacity(10); // Queue for tasks awaiting execution
+//        executor.setThreadNamePrefix("job-executor-thread-");
+//        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+//        executor.initialize();
+//        return executor.getThreadPoolExecutor();
+//    }
 
     /**
      * TaskExecutor for multi-threading inside Spring Batch steps.
