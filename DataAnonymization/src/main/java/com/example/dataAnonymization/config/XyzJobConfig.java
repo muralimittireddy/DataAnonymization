@@ -1,6 +1,7 @@
 package com.example.dataAnonymization.config;
 
 import com.example.dataAnonymization.dto.Report_Dto;
+import com.example.dataAnonymization.dto.XyzDto;
 import com.example.dataAnonymization.reader.AbcReader;
 import com.example.dataAnonymization.reader.XyzReader;
 import com.example.dataAnonymization.writer.XyzWriter;
@@ -50,11 +51,10 @@ public class XyzJobConfig {
     public Step xyzDataAnonymizationStep(XyzReader xyzReader, XyzWriter xyzWriter)
     {
         return new StepBuilder("xyzDataAnonymizationStep",jobRepository)
-                .<Report_Dto,Report_Dto>chunk(100,transactionManager)
+                .<XyzDto,XyzDto>chunk(100,transactionManager)
                 .reader(xyzReader)
                 .writer(xyzWriter)
                 .taskExecutor(taskExecutor)   // 🔑 add TaskExecutor here
-                .throttleLimit(5)             // max concurrent threads
                 .build();
     }
 
