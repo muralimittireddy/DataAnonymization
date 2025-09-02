@@ -147,9 +147,9 @@ def generate_main_table_entries(report_entry):
                 'table': table_name,
                 'external_number': report_entry['external_number'],
                 'internal_number': fake.random_int(min=100_000, max=999_999),
-                'name': fake.name(),
-                'email': fake.email(),
-                'phone': fake.phone_number(),
+                'name': fake.name()[:20],
+                'email': fake.email()[:20],
+                'phone': fake.phone_number()[:20],
                 'system_id': report_entry['external_number']
             }
             entries.append(entry)
