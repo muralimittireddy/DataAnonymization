@@ -9,7 +9,26 @@ public enum SqlEnum {
         "SELECT external_number, internal_number, system, isabc, isxyz, isdef, status",
                 "report_table",
                 "status = 'PENDING'"
+    ),
+
+    ABC_Reader(
+        "SELECT external_number, internal_number, isabc, status",
+                "report_table",
+                "status = 'PENDING' and isabc='Y'"
+    ),
+
+    DEF_Reader(
+            "SELECT external_number, internal_number, isdef, status",
+            "report_table",
+            "status = 'PENDING' and isdef='Y'"
+    ),
+
+    XYZ_READER(
+            "SELECT external_number, internal_number,  isxyz, status",
+            "report_table",
+            "status = 'PENDING' and isxyz='Y'"
     );
+
 
     private final String selectClause;
     private final String fromClause;

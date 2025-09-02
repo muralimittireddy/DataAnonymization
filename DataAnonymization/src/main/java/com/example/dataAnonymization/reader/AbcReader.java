@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 @StepScope
 public class AbcReader extends JdbcPagingItemReader<Report_Dto> {
 
-    SqlEnum query = SqlEnum.PENDING_REPORTS;
+    SqlEnum query = SqlEnum.ABC_Reader;
     public AbcReader(DataSource dataSource) {
 
         setDataSource(dataSource);

@@ -18,7 +18,7 @@ import java.util.Map;
 @StepScope
 public class XyzReader extends JdbcPagingItemReader<Report_Dto>{
 
-    SqlEnum query = SqlEnum.PENDING_REPORTS;
+    SqlEnum query = SqlEnum.XYZ_READER;
     public XyzReader(DataSource dataSource
 //            ,
 //                     @Value("#{stepExecutionContext['minValue']}") Long minValue,
